@@ -258,8 +258,8 @@ button:focus-visible{outline:2px solid #7fd4b0}
       <rect x="80" y="40" width="360" height="340" rx="26" fill="#fff" stroke="#13865E" stroke-width="6"/>
       <rect x="80" y="40" width="360" height="90" rx="26" fill="#13865E"/><rect x="80" y="100" width="360" height="30" fill="#13865E"/>
       <rect x="150" y="18" width="18" height="52" rx="9" fill="#0E6B4A"/><rect x="352" y="18" width="18" height="52" rx="9" fill="#0E6B4A"/>
-      <text id="calM" x="260" y="100" text-anchor="middle" font-size="40" font-weight="700" fill="#fff">113 年 1 月</text>
-      <text x="260" y="300" text-anchor="middle" font-size="190" font-weight="700" fill="#13865E" id="calN">2</text>
+      <text id="calM" x="260" y="100" text-anchor="middle" font-size="40" font-weight="700" fill="#fff">113 年 3 月</text>
+      <text x="260" y="292" text-anchor="middle" font-size="160" font-weight="700" fill="#13865E" id="calN">28</text><text x="260" y="352" text-anchor="middle" font-size="34" font-weight="700" fill="#5F6E67" id="calS">第 1 場</text>
       <g id="calPage"><rect x="80" y="128" width="360" height="252" fill="#fff" stroke="#13865E" stroke-width="6"/></g>
     </svg>
     <div class="s3cap">每 2 個月<small>一次交流</small></div>
@@ -612,9 +612,10 @@ const S={
 3(s,tl){
   head(s,tl);
   tl.from('.s3box',{y:60,opacity:0,stagger:.2,duration:.7,ease:E},.3);
-  const months=[];for(let y=113;y<=115;y++)for(let mo=1;mo<=11;mo+=2){if(y===115&&mo>9)break;months.push(`${y} 年 ${mo} 月`)}const STEP=.24;
+  const months=['1130328','1130502','1130605','1130830','1130926','1131106','1140319','1140521','1140804','1141017','1141219','1150325','1150525','1150723','1150923'];const STEP=.28;const nEl=$('#calN',s),sEl=$('#calS',s);
   const m=$('#calM',s),pg=$('#calPage',s);
-  months.forEach((t,i)=>{tl.fromTo(pg,{opacity:1,y:0,rotateX:0},{opacity:0,y:-30,duration:.16,ease:'power1.in',transformOrigin:'50% 0%'},.9+i*STEP).call(()=>m.textContent=t,null,.9+i*STEP+.08)});
+  months.forEach((d,i)=>{tl.fromTo(pg,{opacity:1,y:0,rotateX:0},{opacity:0,y:-30,duration:.18,ease:'power1.in',transformOrigin:'50% 0%'},.9+i*STEP).call(()=>{m.textContent=`${d.slice(0,3)} 年 ${+d.slice(3,5)} 月`;nEl.textContent=+d.slice(5);sEl.textContent=`第 ${i+1} 場`},null,.9+i*STEP+.09)});
+  cleanups.push(()=>{m.textContent='113 年 3 月';nEl.textContent='28';sEl.textContent='第 1 場'});
   tl.set(pg,{opacity:0},'>');
   tl.to('#clkArc',{strokeDashoffset:0,duration:months.length*STEP,ease:'none'},.9).to('#clkH',{rotation:360,svgOrigin:'260 210',duration:months.length*STEP,ease:'none'},.9);
   P(tl);
